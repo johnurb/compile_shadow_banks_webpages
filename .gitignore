@@ -2,3 +2,4 @@ __pycache__
 /jsons/
 /directory/
 .DS_Store
+/bank_jsons/
