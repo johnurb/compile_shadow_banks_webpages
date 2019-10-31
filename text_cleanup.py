@@ -5,15 +5,18 @@ import json
 import re
 import multiprocessing as mp
 from time import sleep
+import spacy
 
 class Bank_Site:
-    def __init__(self, name, master_string, num_pages):
+    def __init__(self, name, master_string, refined_master_string, num_pages):
         self.bank_name = name
         self.master_text = master_string
+        self.refined_master_text = refined_master_string
         self.number_pages = num_pages
         self.site_dict = {
             'name': self.bank_name,
             'master_string': self.master_text,
+            'refined_master_string': self.refined_master_text,
             'num_pages': self.number_pages
         }
 
@@ -86,7 +89,26 @@ def process_directory_pages(directory):
 
         bank_master_string = ' '.join(remove_boiler(bank_master_string_list).split())
 
-        Bank_Site(bank_name, bank_master_string, site_pages)
+        # pass in cleaned string for part-of-speech analysis. will remove 'sentences' that don't have a 
+        refined_master_string = remove_incomplete_sentences(bank_master_string)
+
+        Bank_Site(bank_name, bank_master_string, refined_master_string, site_pages)
+
+
+def remove_incomplete_sentences(string):
+    nlp = spacy.load("en")
+    refined_string = ''
+    split_master_string = string.split('.')
+    for sentence in split_master_string:
+        doc = nlp(sentence)
+        parts_present = []
+        for token in doc:
+            parts_present.append(token.pos_)
+
+        if ('NOUN' in parts_present or 'PROPN' in parts_present) and 'VERB' in parts_present:
+            refined_string += sentence + '. '
+
+    return refined_string
 
 
 def main():
