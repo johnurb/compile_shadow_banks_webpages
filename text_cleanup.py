@@ -38,7 +38,7 @@ def clean_text(text_page):
             cleaned_lines = []
             for line in page_lines:
                 cleaned_lines.append(re.sub('[^0-9a-z.\s\n]', '',
-                line.lower().lstrip().replace('!', '.').replace('?', '.').replace('\\n', '.').replace('..', '.')).lstrip())
+                line.lower().lstrip().replace('!', '.').replace('?', '.').replace('\\n', '.').replace('...', '.').replace('..', '.')).lstrip())
 
             return (''.join(cleaned_lines))
 
