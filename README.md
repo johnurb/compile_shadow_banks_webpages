@@ -1,0 +1,1 @@
+Program to read in text files containing all of the page text from a single shadow bank website page, compile them with all of the other pages for that website, clean the text, then output that text as a string along with the number of pages included in that string compilation. Output used for later processing of the BOG index of that bank's website.
