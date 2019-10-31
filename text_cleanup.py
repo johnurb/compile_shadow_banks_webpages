@@ -84,10 +84,9 @@ def process_directory_pages(directory):
             else:
                 site_pages += 1
 
-        bank_master_string = remove_boiler(bank_master_string_list)
+        bank_master_string = ' '.join(remove_boiler(bank_master_string_list).split())
 
-        bank_obj = Bank_Site(bank_name, bank_master_string, site_pages)
-        #bank_obj.ouput_info()
+        Bank_Site(bank_name, bank_master_string, site_pages)
 
 
 def main():
@@ -104,7 +103,7 @@ def main():
     #process_directory_pages(bank_folders[0])
 
     pool = mp.Pool(mp.cpu_count())
-    result = pool.map(process_directory_pages, bank_folders)
+    pool.map(process_directory_pages, bank_folders)
 
 
 main()
