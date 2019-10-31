@@ -19,12 +19,12 @@ class Bank_Site:
 
         self.output_info()
 
-
     def output_info(self):
+        json_dir = 'bank_jsons'
         file_name = self.bank_name.replace(' ', '_') + '.json'
-        with open(file_name, 'w') as fout:
+        outfile_path = os.path.join(json_dir, file_name)
+        with open(outfile_path, 'w') as fout:
             json.dump(self.site_dict, fout)
-
 
 
 def clean_text(text_page):
@@ -66,8 +66,6 @@ def remove_boiler(string_list):
 
     return clean_text
 
-   
-
 
 def process_directory_pages(directory):
         bank_name = directory.replace('directory/', '').replace('_', ' ')
@@ -91,6 +89,7 @@ def process_directory_pages(directory):
         bank_obj = Bank_Site(bank_name, bank_master_string, site_pages)
         #bank_obj.ouput_info()
 
+
 def main():
     main_directory = 'directory'
     directory_folders = os.listdir(main_directory)
@@ -106,7 +105,6 @@ def main():
 
     pool = mp.Pool(mp.cpu_count())
     result = pool.map(process_directory_pages, bank_folders)
-
 
 
 main()
