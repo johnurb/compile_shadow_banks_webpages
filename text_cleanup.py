@@ -1,5 +1,4 @@
 import os
-from fuzzywuzzy import fuzz
 import csv
 import json
 import re
